@@ -64,6 +64,7 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 int main(int argc, char *argv[])
 {
 
+	char *progname;
 	int cmd_count = 0;
 	char *line = NULL;
 	size_t len = 0;
@@ -72,6 +73,12 @@ int main(int argc, char *argv[])
 	int arg_count;
 	int builtin_result;
 	(void)argc;
+
+	progname =  strrchr(argv[0], '/');
+		if (progname)
+			progname++;
+		else
+			progname = argv[0];
 
 	while (1)
 	{
@@ -102,7 +109,7 @@ int main(int argc, char *argv[])
 		if (builtin_result == 1) /* other built-in handled */
 			continue;
 		cmd_count++;
-		execute_command(args, argv[0], cmd_count); /* Execute external command */
+		execute_command(args, progname, cmd_count); /* Execute external command */
 	}
 	free(line);
 	return (0);
