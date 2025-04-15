@@ -7,42 +7,42 @@
  */
 int execute_command(char *argv[])
 {
-    pid_t pid;
-    char *command_path;
+	pid_t pid;
+	char *command_path;
 
-    /* Find command in PATH */
-    command_path = find_command(argv[0]);
-    if (!command_path)
-    {
-        fprintf(stderr, "%s: command not found\n", argv[0]);
-        return (0);
-    }
+	/* Find command in PATH */
+	command_path = find_command(argv[0]);
+	if (!command_path)
+	{
+		fprintf(stderr, "%s: command not found\n", argv[0]);
+		return (0);
+	}
 
-    pid = fork();
-    if (pid < 0)
-    {
-        perror("fork");
-        free(command_path);
-        return (0);
-    }
-    else if (pid == 0)
-    {
-        /* Child process */
-        argv[0] = command_path;
-        if (execve(command_path, argv, environ) == -1)
-        {
-            perror(argv[0]);
-            free(command_path);
-            exit(1);
-        }
-    }
-    else
-    {
-        /* Parent process */
-        wait(NULL);
-        free(command_path);
-    }
-    return (1);
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		free(command_path);
+		return (0);
+	}
+	else if (pid == 0)
+	{
+		/* Child process */
+		argv[0] = command_path;
+		if (execve(command_path, argv, environ) == -1)
+		{
+			perror(argv[0]);
+			free(command_path);
+			exit(1);
+		}
+	}
+	else
+	{
+		/* Parent process */
+		wait(NULL);
+		free(command_path);
+	}
+	return (1);
 }
 
 /**
@@ -62,54 +62,41 @@ int execute_command(char *argv[])
  */
 int main(void)
 {
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t nread;
-    char *argv[MAX_ARGS];
-    int argc;
-    int builtin_result;
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t nread;
+	char *argv[MAX_ARGS];
+	int argc;
+	int builtin_result;
 
-    while (1)
-    {
-        printf("$ ");
-        fflush(stdout);
+	while (1)
+	{
+		printf("$ ");
+		fflush(stdout);
+		nread = getline(&line, &len, stdin);
+		if (nread == -1)
+		{
+			printf("\n");
+			break;
+		}
+		if (line[nread - 1] == '\n') /* Remove newline character */
+			line[nread - 1] = '\0';
+		if (strlen(line) == 0) /* Skip empty lines */
+			continue;
+		argc = parse_input(line, argv); /* Parse command and arguments */
+		if (argc == 0) /* Skip if no command was entered */
+			continue;
+		builtin_result = handle_builtins(argv); /* Handle built-in commands */
+		if (builtin_result == 2) /* exit command */
+		{
+			free(line);
+			return (0);
+		}
+		if (builtin_result == 1) /* other built-in handled */
+			continue;
 
-        nread = getline(&line, &len, stdin);
-        if (nread == -1)
-        {
-            printf("\n");
-            break;
-        }
-
-        /* Remove newline character */
-        if (line[nread - 1] == '\n')
-            line[nread - 1] = '\0';
-
-        /* Skip empty lines */
-        if (strlen(line) == 0)
-            continue;
-
-        /* Parse command and arguments */
-        argc = parse_input(line, argv);
-
-        /* Skip if no command was entered */
-        if (argc == 0)
-            continue;
-
-        /* Handle built-in commands */
-        builtin_result = handle_builtins(argv);
-        if (builtin_result == 2) /* exit command */
-        {
-            free(line);
-            return (0);
-        }
-        if (builtin_result == 1) /* other built-in handled */
-            continue;
-
-        /* Execute external command */
-        execute_command(argv);
-    }
-
-    free(line);
-    return (0);
+		execute_command(argv); /* Execute external command */
+	}
+	free(line);
+	return (0);
 }
