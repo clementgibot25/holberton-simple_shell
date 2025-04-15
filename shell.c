@@ -38,7 +38,7 @@ int execute_command(char *argv[])
 	}
 	else
 	{
-		/* Parent process */
+		/* Parent proceses */
 		wait(NULL);
 		free(command_path);
 	}
