@@ -7,16 +7,16 @@
  */
 char *_getenv(const char *name)
 {
-    int i = 0;
-    size_t len = strlen(name);
+	int i = 0;
+	size_t len = strlen(name);
 
-    while (environ[i])
-    {
-        if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=')
-            return (&environ[i][len + 1]);
-        i++;
-    }
-    return (NULL);
+	while (environ[i])
+	{
+		if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=')
+			return (&environ[i][len + 1]);
+		i++;
+	}
+	return (NULL);
 }
 
 /**
@@ -26,48 +26,46 @@ char *_getenv(const char *name)
  */
 char *find_command(char *command)
 {
-    char *path, *path_copy, *dir, *full_path;
+	char *path, *path_copy, *dir, *full_path;
 
-    /* If command contains '/', check if it exists and is executable */
-    if (strchr(command, '/'))
-    {
-        if (access(command, X_OK) == 0)
-            return (strdup(command));
-        return (NULL);
-    }
+	if (strchr(command, '/')) /* If cmd have '/', chck if it exists and is exe */
+	{
+		if (access(command, X_OK) == 0)
+			return (strdup(command));
+		return (NULL);
+	}
 
-    /* Get PATH environment variable */
-    path = _getenv("PATH");
-    if (!path)
-        return (NULL);
+	path = _getenv("PATH"); /* Get PATH environment variable */
+	if (!path)
+		return (NULL);
 
-    path_copy = strdup(path);
-    if (!path_copy)
-        return (NULL);
+	path_copy = strdup(path);
+	if (!path_copy)
+		return (NULL);
 
-    dir = strtok(path_copy, ":");
-    while (dir)
-    {
-        full_path = malloc(strlen(dir) + strlen(command) + 2);
-        if (!full_path)
-        {
-            free(path_copy);
-            return (NULL);
-        }
+	dir = strtok(path_copy, ":");
+	while (dir)
+	{
+		full_path = malloc(strlen(dir) + strlen(command) + 2);
+		if (!full_path)
+		{
+			free(path_copy);
+			return (NULL);
+		}
 
-        sprintf(full_path, "%s/%s", dir, command);
-        if (access(full_path, X_OK) == 0)
-        {
-            free(path_copy);
-            return (full_path);
-        }
+		sprintf(full_path, "%s/%s", dir, command);
+		if (access(full_path, X_OK) == 0)
+		{
+			free(path_copy);
+			return (full_path);
+		}
 
-        free(full_path);
-        dir = strtok(NULL, ":");
-    }
+		free(full_path);
+		dir = strtok(NULL, ":");
+	}
 
-    free(path_copy);
-    return (NULL);
+	free(path_copy);
+	return (NULL);
 }
 
 /**
@@ -75,13 +73,13 @@ char *find_command(char *command)
  */
 void print_env(void)
 {
-    int i = 0;
+	int i = 0;
 
-    while (environ[i])
-    {
-        printf("%s\n", environ[i]);
-        i++;
-    }
+	while (environ[i])
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
 }
 
 /**
@@ -92,15 +90,17 @@ void print_env(void)
  */
 int parse_input(char *line, char *argv[])
 {
-    int argc = 0;
-    argv[argc] = strtok(line, " \t");
-    while (argv[argc] != NULL && argc < MAX_ARGS - 1)
-    {
-        argc++;
-        argv[argc] = strtok(NULL, " \t");
-    }
-    argv[argc] = NULL;
-    return (argc);
+	int argc = 0;
+
+	argv[argc] = strtok(line, " \t");
+
+	while (argv[argc] != NULL && argc < MAX_ARGS - 1)
+	{
+		argc++;
+		argv[argc] = strtok(NULL, " \t");
+	}
+	argv[argc] = NULL;
+	return (argc);
 }
 
 /**
@@ -110,12 +110,12 @@ int parse_input(char *line, char *argv[])
  */
 int handle_builtins(char *argv[])
 {
-    if (strcmp(argv[0], "exit") == 0)
-        return (2); /* Special return value for exit */
-    if (strcmp(argv[0], "env") == 0)
-    {
-        print_env();
-        return (1);
-    }
-    return (0);
+	if (strcmp(argv[0], "exit") == 0)
+		return (2); /* Special return value for exit */
+	if (strcmp(argv[0], "env") == 0)
+	{
+		print_env();
+		return (1);
+	}
+	return (0);
 }
