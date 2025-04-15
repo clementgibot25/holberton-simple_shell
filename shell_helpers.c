@@ -90,17 +90,28 @@ void print_env(void)
  */
 int parse_input(char *line, char *argv[])
 {
-	int argc = 0;
-
-	argv[argc] = strtok(line, " \t");
-
-	while (argv[argc] != NULL && argc < MAX_ARGS - 1)
+	/* Check for special characters */
+	if (strchr(line, ';') || strchr(line, '|') ||
+		strchr(line, '<') || strchr(line, '>'))
 	{
-		argc++;
-		argv[argc] = strtok(NULL, " \t");
+		fprintf(stderr, "Simple commands only\n");
+		return (0);
 	}
-	argv[argc] = NULL;
-	return (argc);
+
+	/* Get first word only */
+	argv[0] = strtok(line, " \t");
+	if (argv[0] == NULL)
+		return (0);
+
+	/* Ensure no more arguments */
+	if (strtok(NULL, " \t") != NULL)
+	{
+		fprintf(stderr, "Too many arguments\n");
+		return (0);
+	}
+
+	argv[1] = NULL;
+	return (1);
 }
 
 /**
