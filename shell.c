@@ -1,11 +1,13 @@
-#include "sh_header.h"
+#include "shell.h"
 
 /**
  * execute_command - Executes a command with its arguments
  * @argv: Array of command and arguments
+ * @progname: Name of the program
+ * @cmd_count: Number of commands executed
  * Return: 1 if command was executed, 0 if not
  */
-int execute_command(char *argv[])
+int execute_command(char *argv[], char *progname, int cmd_count)
 {
 	pid_t pid;
 	char *command_path;
@@ -14,7 +16,7 @@ int execute_command(char *argv[])
 	command_path = find_command(argv[0]);
 	if (!command_path)
 	{
-		fprintf(stderr, "%s: command not found\n", argv[0]);
+		fprintf(stderr, "%s: %d: %s: not found\n", progname, cmd_count, argv[0]);
 		return (0);
 	}
 
@@ -28,7 +30,6 @@ int execute_command(char *argv[])
 	else if (pid == 0)
 	{
 		/* Child process */
-		argv[0] = command_path;
 		if (execve(command_path, argv, environ) == -1)
 		{
 			perror(argv[0]);
@@ -60,19 +61,25 @@ int execute_command(char *argv[])
  *
  * Return: Always 0 (Success)
  */
-int main(void)
+int main(int argc, char *argv[])
 {
+
+	int cmd_count = 0;
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
-	char *argv[MAX_ARGS];
-	int argc;
+	char *args[MAX_ARGS];
+	int arg_count;
 	int builtin_result;
+	(void)argc;
 
 	while (1)
 	{
-		printf("$ ");
-		fflush(stdout);
+		if (isatty(STDIN_FILENO))
+		{
+			printf("$ ");
+			fflush(stdout);
+		}
 		nread = getline(&line, &len, stdin);
 		if (nread == -1)
 		{
@@ -83,10 +90,10 @@ int main(void)
 			line[nread - 1] = '\0';
 		if (strlen(line) == 0) /* Skip empty lines */
 			continue;
-		argc = parse_input(line, argv); /* Parse command and arguments */
-		if (argc == 0) /* Skip if no command was entered */
+		arg_count = parse_input(line, args); /* Parse command and arguments */
+		if (arg_count == 0) /* Skip if no command was entered */
 			continue;
-		builtin_result = handle_builtins(argv); /* Handle built-in commands */
+		builtin_result = handle_builtins(args); /* Handle built-in commands */
 		if (builtin_result == 2) /* exit command */
 		{
 			free(line);
@@ -94,8 +101,8 @@ int main(void)
 		}
 		if (builtin_result == 1) /* other built-in handled */
 			continue;
-
-		execute_command(argv); /* Execute external command */
+		cmd_count++;
+		execute_command(args, argv[0], cmd_count); /* Execute external command */
 	}
 	free(line);
 	return (0);
