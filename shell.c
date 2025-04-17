@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 	{
 		if (isatty(STDIN_FILENO))
 		{
-			printf("$ ");
+			write(STDOUT_FILENO, "$ ", 2);
 			fflush(stdout);
 		}
 		nread = getline(&line, &len, stdin);
