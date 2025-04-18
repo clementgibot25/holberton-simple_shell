@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 	char *args[MAX_ARGS];
 	int arg_count;
 	int builtin_result;
+	int is_interactive = isatty(STDIN_FILENO);
 	(void)argc;
 
 	progname =  strrchr(argv[0], '/');
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
+		if (is_interactive)
 		{
 			write(STDOUT_FILENO, "$ ", 2);
 			fflush(stdout);
@@ -46,7 +47,8 @@ int main(int argc, char *argv[])
 		nread = getline(&line, &len, stdin);
 		if (nread == -1)
 		{
-			printf("\n");
+			if (is_interactive)
+				printf("\n");
 			break;
 		}
 		if (line[nread - 1] == '\n') /* Remove newline character */
