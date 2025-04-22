@@ -18,7 +18,7 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 	if (!command_path)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n", progname, cmd_count, argv[0]);
-		return (0);
+		return (127);
 	}
 
 	pid = fork();
@@ -26,7 +26,7 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 	{
 		perror("fork");
 		free(command_path);
-		return (0);
+		return (-1);
 	}
 	else if (pid == 0)
 	{
@@ -35,7 +35,7 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 		{
 			perror(argv[0]);
 			free(command_path);
-			exit(1);
+			exit(126);
 		}
 	}
 	else
@@ -43,6 +43,9 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 		/* Parent process */
 		wait(&status); /* Récupère le code de retour du fils */
 		free(command_path);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status)); /* Retourne le code de sortie réel */
+		else
+			return (-1);
 	}
-	return (1);
 }
