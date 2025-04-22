@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
 	int arg_count;
 	int builtin_result;
 	int is_interactive = isatty(STDIN_FILENO);
+	int last_status = 0;
 	(void)argc;
 
 	progname =  strrchr(argv[0], '/');
@@ -63,12 +64,11 @@ int main(int argc, char *argv[])
 		if (builtin_result == 2) /* exit command */
 		{
 			free(line);
-			return (0);
+			return (last_status); /* Retourne le dernier code de sortie */
 		}
 		if (builtin_result == 1) /* other built-in handled */
 			continue;
-		execute_command(args, progname, cmd_count); /* Execute external command */
+		last_status = execute_command(args, progname, cmd_count); /* Stocke le code de sortie */
 	}
 	free(line);
-	return (0);
-}
+	return (last_status); /* Retourne le code de la dernière commande exécutée */
