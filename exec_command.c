@@ -11,6 +11,7 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 {
 	pid_t pid;
 	char *command_path;
+	int status; /* Ajout pour récupérer le code de retour du fils */
 
 	/* Find command in PATH */
 	command_path = find_command(argv[0]);
@@ -40,7 +41,7 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 	else
 	{
 		/* Parent process */
-		wait(NULL);
+		wait(&status); /* Récupère le code de retour du fils */
 		free(command_path);
 	}
 	return (1);
