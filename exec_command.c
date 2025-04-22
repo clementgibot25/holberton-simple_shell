@@ -11,6 +11,7 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 {
 	pid_t pid;
 	char *command_path;
+	int status;
 
 	/* Find command in PATH */
 	command_path = find_command(argv[0]);
@@ -40,8 +41,12 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 	else
 	{
 		/* Parent process */
-		wait(NULL);
+		wait(&status);
 		free(command_path);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status)); /* Retourne le vrai code de sortie du fils */
+		else
+			return (-1); /* Erreur d'exécution */
 	}
-	return (0);
+	return (1);
 }
