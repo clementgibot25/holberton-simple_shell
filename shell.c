@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
 		arg_count = parse_input(line, args); /* Parse command and arguments */
 		if (arg_count == 0) /* Skip if no command was entered */
 			continue;
+		cmd_count++;
 		builtin_result = handle_builtins(args); /* Handle built-in commands */
 		if (builtin_result == 2) /* exit command */
 		{
@@ -66,7 +67,6 @@ int main(int argc, char *argv[])
 		}
 		if (builtin_result == 1) /* other built-in handled */
 			continue;
-		cmd_count++;
 		execute_command(args, progname, cmd_count); /* Execute external command */
 	}
 	free(line);
