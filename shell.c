@@ -72,3 +72,4 @@ int main(int argc, char *argv[])
 	}
 	free(line);
 	return (last_status); /* Retourne le code de la dernière commande exécutée */
+}
