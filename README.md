@@ -2,7 +2,7 @@
 
 ## Description
 
-**simple_shell** est une implémentation simplifiée d'un shell Unix développée dans le cadre du programme Holberton School. Ce projet vise à comprendre le fonctionnement d'un shell, la gestion des processus, l'exécution de commandes et la manipulation des variables d'environnement.
+**simple_shell** est une implémentation simplifiée d'un shell Unix. Ce projet vise à comprendre le fonctionnement d'un shell, la gestion des processus, l'exécution de commandes et la manipulation des variables d'environnement.
 
 ## Fonctionnalités
 - Exécution de commandes système (ex : `ls`, `pwd`, `echo`, etc.)
