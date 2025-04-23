@@ -2,31 +2,31 @@
 
 ## Description
 
-**simple_shell** est une implémentation simplifiée d'un shell Unix. Ce projet vise à comprendre le fonctionnement d'un shell, la gestion des processus, l'exécution de commandes et la manipulation des variables d'environnement.
+**simple_shell** is a simplified shell Unix implementation. This project aims to comprehends how a shell works, including process handling,command execution and manipulation of environment variables
 
-## Fonctionnalités
-- Exécution de commandes système (ex : `ls`, `pwd`, `echo`, etc.)
-- Gestion des arguments pour les commandes
-- Recherche des exécutables dans le PATH
-- Gestion des erreurs d'exécution
-- Gestion des signaux (ex : Ctrl+C)
-- Commandes intégrées (builtins) : `exit`, `env`
-- Mode interactif et mode batch (lecture depuis un fichier ou un pipe)
+## Functionality
+- Execution of system commands (ex : `ls`, `pwd`, `echo`, etc.)
+- Handling command-line arguments
+- Searching for executables in the PATH
+- Handling the execution errors
+- Signal handling (ex: Ctrl + C)
+- Bult-ins : `exit`, `env`
+- Interactive mode and non-interactive (batch) mode (ex: reading from a file or a pipe)
 
 ## Compilation
 
-Pour compiler le shell, utilisez :
+To compile the shell, use:
 ```sh
 gcc -Wall -Werror -Wextra -pedantic *.c -o simple_shell
 ```
 
 ## Flowchart
 
-![Flowchart du fonctionnement de simple_shell](simple_shell_flowchart.png)
+![Flowchart of simple shell](simple_shell_flowchart.png)
 
-## Utilisation
+## Usage
 
-### Mode interactif
+### Interactive mode
 ```sh
 $ ./simple_shell
 $ ls -l /tmp
@@ -35,22 +35,22 @@ $ env
 $ exit
 ```
 
-### Mode batch
+### Batch mode
 ```sh
 $ echo -e "ls\npwd" | ./simple_shell
 ```
 
-## Commandes intégrées
-- `exit` : Quitte le shell
-- `env` : Affiche les variables d'environnement
+## Builtins
+- `exit` : Exit the shell
+- `env` : Print the environment variables
 
-## Organisation du projet
-- `shell.c` : Boucle principale du shell
-- `exec_command.c` : Exécution des commandes
-- `shell.h` : Fichier d'en-tête principal
-- `test_shell.sh` : Script de test
+## Project files
+- `shell.c` : Main shell loop
+- `exec_command.c` : Command execution logic
+- `shell.h` : Main header file
+- `test_shell.sh` : Testing script
 
-## Exemple de fonctionnement
+## Example of execution
 ```sh
 $ ./simple_shell
 $ ls
@@ -61,15 +61,15 @@ PATH=/usr/local/bin:/usr/bin:/bin
 $ exit
 ```
 
-## Auteurs
+## Authors
 - Clément Gibot
 - Arnaud Tilawat
 
 ## Licence
-Copyright (c) 2025 Clément Gibot et Arnaud Tilawat. Tous droits réservés.
+Copyright (c) 2025 Clément Gibot and Arnaud Tilawat. All rights reserved.
 
 ## Documentation
-Pour plus d'informations, consultez la page de manuel :
+For more information, refer to the manual page:
 ```sh
 man ./man_1_simple_shell
 ```
