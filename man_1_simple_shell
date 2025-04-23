@@ -8,7 +8,7 @@ simple_shell \- A simple Unix shell written in C
 
 .SH DESCRIPTION
 .B simple_shell
-is a simple implementation of an Unix shell, developed as part of the Holberton School curriculum. It allows users to execute commands from the command line, with or without arguments, in either interactive or batch mode (from a file or pipe).
+is a simple implementation of an Unix shell, developed as part of the Holberton School curriculum. It allows users to execute commands from the command line, with or without arguments, in either interactive or non interactive (batch mode) (ex: from a file or pipe).
 
 The shell supports:
 .IP \(bu
@@ -20,7 +20,7 @@ Searching the PATH for executables
 .IP \(bu
 Handling execution errors
 .IP \(bu
-Signal handling (e.g., Ctrl+C)
+Signal handling (ex: Ctrl+C)
 .IP \(bu
 Built-in commands such as exit and env
 
