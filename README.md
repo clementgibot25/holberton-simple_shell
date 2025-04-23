@@ -71,6 +71,5 @@ Copyright (c) 2025 Clément Gibot et Arnaud Tilawat. Tous droits réservés.
 ## Documentation
 Pour plus d'informations, consultez la page de manuel :
 ```sh
-man ./simple_shell.1
-
-[def]: simple_shell_flowchart.png
+man ./man_1_simple_shell
+```
