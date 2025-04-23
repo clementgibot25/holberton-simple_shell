@@ -1,0 +1,66 @@
+ .TH SIMPLE_SHELL 1 "Avril 2025" "Version 1.0" "Manuel utilisateur"
+.SH NOM
+simple_shell \- Un shell Unix simple écrit en C
+
+.SH SYNOPSIS
+.B simple_shell
+.RI [AUCUN ARGUMENT]
+
+.SH DESCRIPTION
+.B simple_shell
+est une implémentation simple d'un shell Unix, développée dans le cadre du cursus Holberton School. Il permet d'exécuter des commandes en ligne, avec ou sans arguments, de manière interactive ou en mode batch (fichier).
+
+Le shell prend en charge :
+.IP \(bu
+L'exécution de commandes système (ex: ls, pwd, echo, etc.)
+.IP \(bu
+La gestion des arguments pour les commandes
+.IP \(bu
+La gestion du PATH pour trouver les exécutables
+.IP \(bu
+La gestion des erreurs d'exécution
+.IP \(bu
+La gestion des signaux (ex: Ctrl+C)
+.IP \(bu
+Les commandes intégrées (builtins) comme exit et env
+
+.SH UTILISATION
+Après compilation, lancez le shell :
+.EX
+$ ./simple_shell
+.EE
+
+Vous pouvez alors taper des commandes comme dans un shell classique :
+.EX
+$ ls -l /tmp
+$ echo "Hello, world!"
+$ env
+$ exit
+.EE
+
+Pour exécuter un script de commandes :
+.EX
+$ echo -e "ls\npwd" | ./simple_shell
+.EE
+
+.SH COMMANDES INTÉGRÉES
+.TP
+.B exit
+Quitte le shell.
+.TP
+.B env
+Affiche les variables d'environnement.
+
+.SH AUTEURS
+Projet réalisé par Clément Gibot et Arnaud Tilawat dans le cadre du programme Holberton School.
+
+.SH VOIR AUSSI
+.BR sh (1),
+.BR bash (1),
+.BR man (1)
+
+.SH BUGS
+Pour signaler un bug, contactez l'auteur ou ouvrez une issue sur le dépôt du projet.
+
+.SH COPYRIGHT
+Copyright (c) 2025 Clément Gibot et Arnaud Tilawat. Tous droits réservés.
