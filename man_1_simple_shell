@@ -1,36 +1,36 @@
- .TH SIMPLE_SHELL 1 "Avril 2025" "Version 1.0" "Manuel utilisateur"
-.SH NOM
-simple_shell \- Un shell Unix simple écrit en C
+.TH SIMPLE_SHELL 1 "April 2025" "Version 1.0" "User Manual"
+.SH NAME
+simple_shell \- A simple Unix shell written in C
 
 .SH SYNOPSIS
 .B simple_shell
-.RI [AUCUN ARGUMENT]
+.RI [NO ARGUMENTS]
 
 .SH DESCRIPTION
 .B simple_shell
-est une implémentation simple d'un shell Unix, développée dans le cadre du cursus Holberton School. Il permet d'exécuter des commandes en ligne, avec ou sans arguments, de manière interactive ou en mode batch (fichier).
+is a simple implementation of an Unix shell, developed as part of the Holberton School curriculum. It allows users to execute commands from the command line, with or without arguments, in either interactive or batch mode (from a file or pipe).
 
-Le shell prend en charge :
+The shell supports:
 .IP \(bu
-L'exécution de commandes système (ex: ls, pwd, echo, etc.)
+Execution of system commands (e.g., ls, pwd, echo, etc.)
 .IP \(bu
-La gestion des arguments pour les commandes
+Handling of command-line arguments
 .IP \(bu
-La gestion du PATH pour trouver les exécutables
+Searching the PATH for executables
 .IP \(bu
-La gestion des erreurs d'exécution
+Handling execution errors
 .IP \(bu
-La gestion des signaux (ex: Ctrl+C)
+Signal handling (e.g., Ctrl+C)
 .IP \(bu
-Les commandes intégrées (builtins) comme exit et env
+Built-in commands such as exit and env
 
-.SH UTILISATION
-Après compilation, lancez le shell :
+.SH USAGE
+After compilation, run the shell:
 .EX
 $ ./simple_shell
 .EE
 
-Vous pouvez alors taper des commandes comme dans un shell classique :
+You can then enter commands as in a standard shell:
 .EX
 $ ls -l /tmp
 $ echo "Hello, world!"
@@ -38,29 +38,29 @@ $ env
 $ exit
 .EE
 
-Pour exécuter un script de commandes :
+To run a script of commands:
 .EX
 $ echo -e "ls\npwd" | ./simple_shell
 .EE
 
-.SH COMMANDES INTÉGRÉES
+.SH BUILT-IN COMMANDS
 .TP
 .B exit
-Quitte le shell.
+Exits the shell.
 .TP
 .B env
-Affiche les variables d'environnement.
+Prints the environment variables.
 
-.SH AUTEURS
-Projet réalisé par Clément Gibot et Arnaud Tilawat dans le cadre du programme Holberton School.
+.SH AUTHORS
+Project developed by Clément Gibot and Arnaud Tilawat as part of the Holberton School program.
 
-.SH VOIR AUSSI
+.SH SEE ALSO
 .BR sh (1),
 .BR bash (1),
 .BR man (1)
 
 .SH BUGS
-Pour signaler un bug, contactez l'auteur ou ouvrez une issue sur le dépôt du projet.
+To report a bug, please contact the author or open an issue on the project repository.
 
 .SH COPYRIGHT
-Copyright (c) 2025 Clément Gibot et Arnaud Tilawat. Tous droits réservés.
+Copyright (c) 2025 Clément Gibot and Arnaud Tilawat. All rights reserved.
