@@ -32,11 +32,7 @@ int main(int argc, char *argv[])
 	int last_status = 0;
 	(void)argc;
 
-	progname =  strrchr(argv[0], '/');
-		if (progname)
-			progname++;
-		else
-			progname = argv[0];
+	progname = argv[0];
 
 	while (1)
 	{
