@@ -38,10 +38,10 @@ int main(int argc, char *argv[])
 	{
 		if (is_interactive)
 		{
-			write(STDOUT_FILENO, "$ ", 2);
+			write(STDOUT_FILENO, "$ ", 2); /* Display prompt when interactive */
 			fflush(stdout);
 		}
-		nread = getline(&line, &len, stdin);
+		nread = getline(&line, &len, stdin); /* Read user input */
 		if (nread == -1)
 		{
 			if (is_interactive)
@@ -60,12 +60,12 @@ int main(int argc, char *argv[])
 		if (builtin_result == 2) /* exit command */
 		{
 			free(line);
-			return (last_status); /* Retourne le dernier code de sortie */
+			return (last_status); /* Return the last exit code */
 		}
 		if (builtin_result == 1) /* other built-in handled */
 			continue;
-		last_status = execute_command(args, progname, cmd_count); /* Stocke le code de sortie */
+		last_status = execute_command(args, progname, cmd_count); /* Store the exit code */
 	}
 	free(line);
-	return (last_status); /* Retourne le code de la dernière commande exécutée */
+	return (last_status); /* Return the exit code of the last executed command */
 }

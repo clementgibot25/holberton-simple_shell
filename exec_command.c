@@ -44,9 +44,9 @@ int execute_command(char *argv[], char *progname, int cmd_count)
 		wait(&status);
 		free(command_path);
 		if (WIFEXITED(status))
-			return (WEXITSTATUS(status)); /* Retourne le vrai code de sortie du fils */
+			return (WEXITSTATUS(status)); /* Return the real code of the child process */
 		else
-			return (-1); /* Erreur d'exécution */
+			return (-1); /* Execution error */
 	}
 	return (1);
 }
