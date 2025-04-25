@@ -22,7 +22,7 @@ gcc -Wall -Werror -Wextra -pedantic *.c -o simple_shell
 
 ## Flowchart
 
-![Simple Shell Flowchart (English)](simple_shell_flowchart_en.png)
+![Simple Shell Flowchart](simple_shell_flowchart_en_interactive.png)
 
 ## Usage
 
